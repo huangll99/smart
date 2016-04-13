@@ -1,6 +1,6 @@
-package com.hll.utils;
+package com.hll.ch3.utils;
 
-import com.hll.ch3.utils.PropsUtil;
+import com.hll.framework.helper.ConfigHelper;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
@@ -31,17 +31,11 @@ public class DBHelper {
   private static final BasicDataSource DATA_SOURCE;
 
   static {
-    Properties conf = PropsUtil.loadProps("jdbc.properties");
-    String driver = conf.getProperty("jdbc.driver");
-    String url = conf.getProperty("jdbc.url");
-    String username = conf.getProperty("jdbc.username");
-    String password = conf.getProperty("jdbc.password");
-
     DATA_SOURCE = new BasicDataSource();
-    DATA_SOURCE.setDriverClassName(driver);
-    DATA_SOURCE.setUrl(url);
-    DATA_SOURCE.setUsername(username);
-    DATA_SOURCE.setPassword(password);
+    DATA_SOURCE.setDriverClassName(ConfigHelper.getJdbcDriver());
+    DATA_SOURCE.setUrl(ConfigHelper.getJdbcUrl());
+    DATA_SOURCE.setUsername(ConfigHelper.getJdbcUsername());
+    DATA_SOURCE.setPassword(ConfigHelper.getJdbcPassword());
   }
 
   public static Connection getConnection() {
@@ -58,20 +52,6 @@ public class DBHelper {
     }
     return connection;
   }
-
-/*  public static void closeConnection() {
-    Connection conn = CONNECTION_HOLDER.get();
-    if (conn != null) {
-      try {
-        conn.close();
-      } catch (SQLException e) {
-        logger.error("close connection failure", e);
-        throw new RuntimeException(e);
-      } finally {
-        CONNECTION_HOLDER.remove();
-      }
-    }
-  }*/
 
   /**
    * 查询实体列表
