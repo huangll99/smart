@@ -1,8 +1,9 @@
 package com.hll.ch3.service;
 
 import com.hll.ch3.model.Customer;
-import com.hll.ch3.utils.DBHelper;
 import com.hll.framework.annotation.Service;
+import com.hll.framework.annotation.Transaction;
+import com.hll.framework.helper.DBHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,14 +27,17 @@ public class CustomerService {
     return DBHelper.queryEntity(Customer.class,"select * from customer where id=?",id);
   }
 
+  @Transaction
   public boolean createCustomer(Map<String, Object> fieldMap) {
     return DBHelper.insertEntity(Customer.class,fieldMap);
   }
 
+  @Transaction
   public boolean updateCustomer(long id, Map<String, Object> fieldMap) {
     return DBHelper.updateEntity(Customer.class,id,fieldMap);
   }
 
+  @Transaction
   public boolean deleteCustomer(long id) {
     return DBHelper.deleteEntity(Customer.class,id);
   }

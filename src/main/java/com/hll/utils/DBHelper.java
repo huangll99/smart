@@ -191,4 +191,10 @@ public class DBHelper {
     return entityClass.getSimpleName();
   }
 
+
+  public static void main(String[] args) throws SQLException {
+    int defaultTransactionIsolation = getConnection().getMetaData().getDefaultTransactionIsolation();
+    System.out.println(defaultTransactionIsolation);
+  }
+
 }
